@@ -1,55 +1,79 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import './App.css';
+import styled from 'styled-components';
+import customData from './album.json';
+
+const AlbumContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: space-between;
+
+`;
+
+const Album = styled.div`
+  width: 240px;
+  margin: 10px;
+  align-self: flex-start;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+  font-size: 24px;
+`;
+
+const Rank = styled.h3`
+  font-size: 30px;
+  margin: 10px;
+  border: 4px solid blue;
+  border-radius: 50px;
+  width: 20px;
+  color: blue;
+  height: 20px;
+  line-height: 1em;
+  padding: 30px;
+  text-align: center;
+`;
+
+const CoverArt = styled.div`
+`;
+
+const AppleMusicLink = styled.a`
+  font-size: 70px;
+  text-align: center;
+  line-height: 1em;
+  margin: auto;
+`;
+const TopWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+
+
+
+
+
 
 function App() {
-  const [date, setDate] = useState(null);
-  useEffect(() => {
-    async function getDate() {
-      const res = await fetch('/api/date');
-      const newDate = await res.text();
-      setDate(newDate);
-    }
-    getDate();
-  }, []);
+
+let albumsToJSX = customData.map(album => (
+    <Album>
+
+      <TopWrapper><Rank>{album.rank}</Rank>
+            <AppleMusicLink href={album.applemusic}><CoverArt>📻</CoverArt></AppleMusicLink></TopWrapper>
+      <Title>{album.artist}: {album.album}</Title>
+    </Album>
+  ));
+
   return (
     <main>
-      <h1>Create React App + Go API</h1>
-      <h2>
-        Deployed with{' '}
-        <a
-          href="https://zeit.co/docs"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          ZEIT Now
-        </a>
-        !
-      </h2>
-      <p>
-        <a
-          href="https://github.com/zeit/now-examples/tree/master/create-react-app-functions"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          This project
-        </a>{' '}
-        was bootstrapped with{' '}
-        <a href="https://facebook.github.io/create-react-app/">
-          Create React App
-        </a>{' '}
-        and contains three directories, <code>/public</code> for static assets,{' '}
-        <code>/src</code> for components and content, and <code>/api</code>{' '}
-        which contains a serverless <a href="https://golang.org/">Go</a>{' '}
-        function. See{' '}
-        <a href="/api/date">
-          <code>api/date</code> for the Date API with Go
-        </a>
-        .
-      </p>
-      <br />
-      <h2>The date according to Go is:</h2>
-      <p>{date ? date : 'Loading date...'}</p>
+    <AlbumContainer>
+      {albumsToJSX}
+    </AlbumContainer>
     </main>
   );
 }
