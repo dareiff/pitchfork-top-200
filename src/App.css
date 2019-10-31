@@ -5,9 +5,9 @@ main {
   font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica',
     'Arial', sans-serif;
   hyphens: auto;
-  line-height: 1.65;
+  line-height: 1.45;
   margin: 0 auto;
-  padding: 30px;
+  padding: 10px;
 }
 h1 {
   font-size: 45px;

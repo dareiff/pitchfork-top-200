@@ -17,12 +17,23 @@ const Album = styled.div`
   width: 240px;
   margin: 10px;
   align-self: flex-start;
+
+  @media (max-width: 500px) {
+    width: 160px;
+    margin: 5px;
+  }
 `;
 
 const Title = styled.h2`
   text-align: center;
   font-size: 22px;
   line-height: 1.3em;
+
+  @media (max-width: 500px) {
+    font-size: 16px;
+    text-align: left;
+    margin: 10px 0;
+  }
 `;
 
 const MainTitle = styled.h1`
@@ -48,11 +59,20 @@ const Rank = styled.h3`
   display: block;
   position: absolute;
   line-height: 1em;
-  text-align: center;`
-  ;
+  text-align: center;
+
+  @media (max-width: 500px) {
+    margin: 5px 0;
+  }
+`;
 
 const CoverArt = styled.img`
   width: 200px;
+
+  @media (max-width: 500px) {
+    width: 140px;
+    margin: 0;
+  }
 `;
 
 const AppleMusicLink = styled.a`
@@ -61,6 +81,10 @@ const AppleMusicLink = styled.a`
 
   &:hover {
     border-bottom: none;
+  }
+
+  @media (max-width: 500px) {
+    margin: 0;
   }
 `;
 
