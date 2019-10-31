@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import styled from 'styled-components';
 import customData from './album.json';
+import LazyLoad from 'react-lazyload';
 
 const AlbumContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  margin: 0 auto;
+  margin: 40px auto;
   justify-content: space-between;
-
 `;
 
 const Album = styled.div`
@@ -21,56 +21,75 @@ const Album = styled.div`
 
 const Title = styled.h2`
   text-align: center;
-  font-size: 24px;
+  font-size: 22px;
+  line-height: 1.3em;
+`;
+
+const MainTitle = styled.h1`
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.3em;
+`;
+
+const Description = styled.p`
+    text-align: center;
+    margin: auto;
+    width: 70%;
+    max-width: 600px;
 `;
 
 const Rank = styled.h3`
-  font-size: 30px;
+  background-color: blue;
+  font-size: 20px;
   margin: 10px;
   border: 4px solid blue;
-  border-radius: 50px;
-  width: 20px;
-  color: blue;
-  height: 20px;
+  padding: 10px;
+  color: white;
+  display: block;
+  position: absolute;
   line-height: 1em;
-  padding: 30px;
-  text-align: center;
-`;
+  text-align: center;`
+  ;
 
-const CoverArt = styled.div`
+const CoverArt = styled.img`
+  width: 200px;
 `;
 
 const AppleMusicLink = styled.a`
-  font-size: 70px;
-  text-align: center;
-  line-height: 1em;
   margin: auto;
+  text-decoration: none;
+
+  &:hover {
+    border-bottom: none;
+  }
 `;
+
 const TopWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
 
-
-
-
-
-
-
 function App() {
 
 let albumsToJSX = customData.map(album => (
-    <Album>
-
-      <TopWrapper><Rank>{album.rank}</Rank>
-            <AppleMusicLink href={album.applemusic}><CoverArt>📻</CoverArt></AppleMusicLink></TopWrapper>
+    <Album key={album.rank}>
+      <TopWrapper>
+        <Rank>{album.rank}</Rank>
+        <AppleMusicLink href={album.applemusic}>
+          <LazyLoad height={200}>
+            <CoverArt src={process.env.PUBLIC_URL + "/albums/" + album.rank + ".jpg"} />
+          </LazyLoad>
+        </AppleMusicLink>
+      </TopWrapper>
       <Title>{album.artist}: {album.album}</Title>
     </Album>
   ));
 
   return (
     <main>
+    <MainTitle>Pitchfork’s Top 200 from the 2010s</MainTitle>
+    <Description>So far, everything just links to Apple Music. If it opens iTunes on your phone, just hit the ”Open in Apple Music” button and it should do that from then on.</Description>
     <AlbumContainer>
       {albumsToJSX}
     </AlbumContainer>
