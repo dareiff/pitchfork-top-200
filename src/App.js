@@ -113,7 +113,7 @@ let albumsToJSX = customData.map(album => (
   return (
     <main>
     <MainTitle>Pitchfork’s Top 200 from the 2010s</MainTitle>
-    <Description>So far, everything just links to Apple Music. If it opens iTunes on your phone, just hit the ”Open in Apple Music” button and it should do that from then on.</Description>
+    <Description>For Music folks.</Description>
     <AlbumContainer>
       {albumsToJSX}
     </AlbumContainer>
