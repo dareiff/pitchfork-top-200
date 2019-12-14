@@ -1,9 +1,38 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import './App.css';
-import styled from 'styled-components';
-import customData from './album.json';
-import LazyLoad from 'react-lazyload';
+import React from "react";
+import { useEffect, useState } from "react";
+import "./App.css";
+import styled from "styled-components";
+import customData from "./album.json";
+import Album from "./Album.js";
+
+const MainTitle = styled.h1`
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.3em;
+`;
+
+const FilterHeader = styled.span`
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.3em;
+  font-weight: 700;
+  margin: 30px auto 0;
+`;
+
+const Description = styled.p`
+  text-align: center;
+  margin: auto;
+  width: 70%;
+  max-width: 600px;
+`;
+
+const Toggle = styled.a`
+  text-align: center;
+  margin: auto;
+  width: 70%;
+  max-width: 600px;
+`;
 
 const AlbumContainer = styled.div`
   display: flex;
@@ -13,110 +42,37 @@ const AlbumContainer = styled.div`
   justify-content: space-between;
 `;
 
-const Album = styled.div`
-  width: 240px;
-  margin: 10px;
-  align-self: flex-start;
-
-  @media (max-width: 500px) {
-    width: 160px;
-    margin: 5px;
-  }
-`;
-
-const Title = styled.h2`
-  text-align: center;
-  font-size: 22px;
-  line-height: 1.3em;
-
-  @media (max-width: 500px) {
-    font-size: 16px;
-    text-align: left;
-    margin: 10px 0;
-  }
-`;
-
-const MainTitle = styled.h1`
-  text-align: center;
-  font-size: 30px;
-  line-height: 1.3em;
-`;
-
-const Description = styled.p`
-    text-align: center;
-    margin: auto;
-    width: 70%;
-    max-width: 600px;
-`;
-
-const Rank = styled.h3`
-  background-color: blue;
-  font-size: 20px;
-  margin: 10px;
-  border: 4px solid blue;
-  padding: 10px;
-  color: white;
-  display: block;
-  position: absolute;
-  line-height: 1em;
-  text-align: center;
-
-  @media (max-width: 500px) {
-    margin: 5px 0;
-  }
-`;
-
-const CoverArt = styled.img`
-  width: 200px;
-
-  @media (max-width: 500px) {
-    width: 140px;
-    margin: 0;
-  }
-`;
-
-const AppleMusicLink = styled.a`
-  margin: auto;
-  text-decoration: none;
-
-  &:hover {
-    border-bottom: none;
-  }
-
-  @media (max-width: 500px) {
-    margin: 0;
-  }
-`;
-
-const TopWrapper = styled.div`
+const Filter = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-flow: row;
+  width: 200px;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: space-around;
 `;
 
 function App() {
 
-let albumsToJSX = customData.map(album => (
-    <Album key={album.rank}>
-      <TopWrapper>
-        <Rank>{album.rank}</Rank>
-        <AppleMusicLink href={album.applemusic}>
-          <LazyLoad height={200}>
-            <CoverArt src={process.env.PUBLIC_URL + "/albums/" + album.rank + ".jpg"} />
-          </LazyLoad>
-        </AppleMusicLink>
-      </TopWrapper>
-      <Title>{album.artist}: {album.album}</Title>
-    </Album>
+  const [filter, setFilter] = useState('noFilter');
+
+  let albumsToJSX = customData.map(album => (
+    <Album filter={filter} key={album.rank} rank={album.rank} album={album.album} artist={album.artist} appleLink={album.applemusic} />
   ));
 
   return (
     <main>
-    <MainTitle>Pitchfork’s Top 200 from the 2010s</MainTitle>
-    <Description>For Music folks.</Description>
-    <AlbumContainer>
-      {albumsToJSX}
-    </AlbumContainer>
+      <MainTitle>Pitchfork’s Top 200 from the 2010s</MainTitle>
+      <Description>For Music folks. Vote up, down, or clear choice.</Description>
+      <FilterHeader>Filter:</FilterHeader>
+      <Filter>
+        <Toggle onClick={() => setFilter("like")}>❤️</Toggle>
+        <Toggle onClick={() => setFilter("dislike")}>💔</Toggle>
+        <Toggle onClick={() => setFilter("undefined")}>🤷‍♀️</Toggle>
+        <Toggle onClick={() => setFilter("noFilter")}>❌</Toggle>
+      </Filter>
+      <AlbumContainer>
+        {albumsToJSX}
+      </AlbumContainer>
     </main>
   );
 }
