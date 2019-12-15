@@ -62,7 +62,7 @@ function App() {
   return (
     <main>
       <MainTitle>Pitchfork’s Top 200 from the 2010s</MainTitle>
-      <Description>For Music folks. Vote up, down, or clear choice.</Description>
+      <Description>For Music folks.</Description>
       <FilterHeader>Filter:</FilterHeader>
       <Filter>
         <Toggle onClick={() => setFilter("like")}>❤️</Toggle>
