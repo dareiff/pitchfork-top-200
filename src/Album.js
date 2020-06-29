@@ -8,9 +8,9 @@ const Album = styled.div`
 	margin: 10px;
 	align-self: flex-start;
 	display: block;
-	display: ${props => (props.showMe === false) && "none"};
+	display: ${(props) => props.showMe === false && "none"};
 	opacity: 1;
-	opacity: ${props => props.semiHide};
+	opacity: ${(props) => props.semiHide};
 
 	@media (max-width: 500px) {
 		width: 160px;
@@ -22,7 +22,7 @@ const Vote = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	background: ${props => props.iLike && "#4af2a1"};
+	background: ${(props) => props.iLike && "#4af2a1"};
 	padding: 4px 0;
 	border-radius: 4px;
 	margin: 5px 20px;
@@ -114,7 +114,7 @@ function AlbumComponent(props) {
 
 	useEffect(() => {
 		localStorage.setItem(props.rank, likeOrDislike);
-	}, [likeOrDislike]);
+	}, [likeOrDislike, props.rank]);
 
 	useEffect(() => {
 		if ((props.filter === "like") & (likeOrDislike === true)) {
@@ -127,9 +127,15 @@ function AlbumComponent(props) {
 			setShowMe(false);
 		} else if ((props.filter === "dislike") & (likeOrDislike === false)) {
 			setShowMe(true);
-		} else if ((props.filter === "dislike") & (likeOrDislike === undefined)) {
+		} else if (
+			(props.filter === "dislike") &
+			(likeOrDislike === undefined)
+		) {
 			setShowMe(false);
-		} else if ((props.filter === "undefined") & (likeOrDislike === undefined)) {
+		} else if (
+			(props.filter === "undefined") &
+			(likeOrDislike === undefined)
+		) {
 			setShowMe(true);
 		} else if ((props.filter === "undefined") & (likeOrDislike === false)) {
 			setShowMe(false);
@@ -138,7 +144,7 @@ function AlbumComponent(props) {
 		} else if (props.filter === "noFilter") {
 			setShowMe(true);
 		}
-	});
+	}, [props.filter, likeOrDislike]);
 
 	return (
 		<Album showMe={showMe} semiHide={likeOrDislike === false && "0.2"}>
@@ -147,15 +153,32 @@ function AlbumComponent(props) {
 				<AlbumLink href={props.appleLink}>
 					<LazyLoad height={200}>
 						<CoverArt
-							src={process.env.PUBLIC_URL + "/albums/" + props.rank + ".jpg"}
+							src={
+								process.env.PUBLIC_URL +
+								"/albums/" +
+								props.rank +
+								".jpg"
+							}
 						/>
 					</LazyLoad>
 				</AlbumLink>
 			</TopWrapper>
 			<Vote iLike={likeOrDislike}>
-				<span onClick={() => setLikeOrDislike(false)}>👎</span>
-				<span onClick={() => setLikeOrDislike(undefined)}>😑</span>
-				<span onClick={() => setLikeOrDislike(true)}>👍</span>
+				<span onClick={() => setLikeOrDislike(false)}>
+					<span role="img" aria-label="Thumbs-down emoji">
+						👎
+					</span>
+				</span>
+				<span onClick={() => setLikeOrDislike(undefined)}>
+					<span role="img" aria-label="Neutral-face emoji">
+						😑
+					</span>
+				</span>
+				<span onClick={() => setLikeOrDislike(true)}>
+					<span role="img" aria-label="Thumbs-up emoji">
+						👍
+					</span>
+				</span>
 			</Vote>
 			<Title>
 				{props.artist}: {props.album}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import styled from "styled-components";
 import customData from "./album.json";
@@ -65,10 +65,10 @@ function App() {
       <Description>For Music folks.</Description>
       <FilterHeader>Filter:</FilterHeader>
       <Filter>
-        <Toggle onClick={() => setFilter("like")}>❤️</Toggle>
-        <Toggle onClick={() => setFilter("dislike")}>💔</Toggle>
-        <Toggle onClick={() => setFilter("undefined")}>🤷‍♀️</Toggle>
-        <Toggle onClick={() => setFilter("noFilter")}>❌</Toggle>
+        <Toggle onClick={() => setFilter("like")}><span role="img" aria-label="Heart emoji">❤️</span></Toggle>
+        <Toggle onClick={() => setFilter("dislike")}><span role="img" aria-label="Broken-heart emoji">💔</span></Toggle>
+        <Toggle onClick={() => setFilter("undefined")}><span role="img" aria-label="Shrug emoji (unrated albums)">🤷‍♀️</span></Toggle>
+        <Toggle onClick={() => setFilter("noFilter")}><span role="img" aria-label="X emoji ">❌</span></Toggle>
       </Filter>
       <AlbumContainer>
         {albumsToJSX}
