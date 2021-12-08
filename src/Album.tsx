@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -100,7 +101,7 @@ interface AlbumComponent {
 }
 
 function AlbumComponent(props: AlbumComponent) {
-  const [iLike, setILike] = useState<true | false | undefined>(false);
+  const [iLike, setILike] = useState<true | false | undefined>(undefined);
   React.useEffect(() => {
     let convertedLocalState;
     if (typeof window !== "undefined") {
@@ -124,10 +125,10 @@ function AlbumComponent(props: AlbumComponent) {
 
   const [likeOrDislike, setLikeOrDislike] = useState<
     "like" | "dislike" | "unknown"
-  >(iLike ? "like" : "dislike");
+  >(iLike === true ? "like" : "dislike");
 
   useEffect(() => {
-    localStorage.setItem(props.rank, likeOrDislike ? "true" : "false");
+    localStorage.setItem(props.rank, likeOrDislike);
   }, [likeOrDislike, props.rank]);
 
   return (
@@ -141,7 +142,7 @@ function AlbumComponent(props: AlbumComponent) {
     >
       <TopWrapper>
         <Rank>{props.rank}</Rank>
-        <AlbumLink href={props.appleLink}>
+        <Link href={props.appleLink}>
           <Image
             src={
               "https://2010s-top.derekr.net" + "/albums/" + props.rank + ".jpg"
@@ -149,7 +150,7 @@ function AlbumComponent(props: AlbumComponent) {
             height={200}
             width={200}
           />
-        </AlbumLink>
+        </Link>
       </TopWrapper>
       <Vote iLike={likeOrDislike === "like"}>
         <span onClick={() => setLikeOrDislike("dislike")}>
