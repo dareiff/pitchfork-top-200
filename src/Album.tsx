@@ -13,9 +13,10 @@ const Album = styled.div<AlbumStyleProps>`
     width: 240px;
     margin: 10px;
     align-self: flex-start;
-    display: block;
+    display: flex;
+    flex-direction: column;
     opacity: 1;
-    opacity: ${(props) => (!props.semiHide ? "0.2" : "1")};
+    opacity: ${(props) => (props.semiHide ? "0.2" : "1")};
 
     display: ${(props) => (props.hideCompletely ? "none" : "block")};
     @media (max-width: 500px) {
@@ -44,8 +45,7 @@ const Vote = styled.div<VoteInterface>`
 `;
 
 const Title = styled.h2`
-    text-align: center;
-    font-size: 22px;
+    font-size: 1.2em;
     line-height: 1.3em;
     margin: 5px;
 
@@ -57,16 +57,11 @@ const Title = styled.h2`
 `;
 
 const Rank = styled.h3`
-    background-color: blue;
     font-size: 20px;
-    margin: 10px;
-    border: 4px solid blue;
-    padding: 10px;
-    color: white;
+    margin: 10px 10px 0 0;
+    color: black;
     display: block;
-    position: absolute;
-    line-height: 1em;
-    text-align: center;
+    text-align: left;
 
     @media (max-width: 500px) {
         margin: 5px 0;
@@ -75,7 +70,7 @@ const Rank = styled.h3`
 
 const TopWrapper = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
 `;
 
@@ -92,7 +87,7 @@ function AlbumComponent(props: AlbumComponent) {
         "like" | "dislike" | "unknown" | undefined
     >(undefined);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fromLocalState = localStorage.getItem(props.rank);
         setLikeOrDislike(
             fromLocalState === "like" ||
@@ -103,7 +98,7 @@ function AlbumComponent(props: AlbumComponent) {
         );
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (likeOrDislike === "like") {
             localStorage.setItem(props.rank, "like");
         } else if (likeOrDislike === "dislike") {
@@ -115,9 +110,7 @@ function AlbumComponent(props: AlbumComponent) {
 
     return (
         <Album
-            semiHide={
-                likeOrDislike === "dislike" || likeOrDislike !== props.filter
-            }
+            semiHide={likeOrDislike === "dislike"}
             hideCompletely={
                 likeOrDislike !== props.filter &&
                 props.filter !== "unknown" &&
@@ -153,7 +146,8 @@ function AlbumComponent(props: AlbumComponent) {
                 </span>
             </Vote>
             <Title>
-                {props.artist}: {props.album}
+                {props.artist}:<br />
+                {props.album}
             </Title>
         </Album>
     );
