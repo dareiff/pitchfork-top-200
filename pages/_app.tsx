@@ -2,7 +2,7 @@
 import { AppProps } from "next/app";
 import "../src/styles.css";
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+    return <Component {...pageProps} />;
 }
 
 // Only uncomment this method if you have blocking data requirements for
