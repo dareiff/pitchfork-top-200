@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
@@ -69,6 +70,16 @@ function App() {
 
     return (
         <main>
+            <Head>
+                <title>
+                    Pitchfork’s Top 200 from the 2010s - for Apple Music
+                </title>
+                <meta
+                    name="description"
+                    content="Pitchfork’s Top 200 from the 2010s - for Apple Music"
+                />
+            </Head>
+
             <MainTitle>Pitchfork’s Top 200 from the 2010s</MainTitle>
             <Description>For Music folks.</Description>
             <FilterHeader>Filter:</FilterHeader>
