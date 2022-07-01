@@ -96,6 +96,7 @@ function AlbumComponent(props: AlbumComponent) {
                 ? fromLocalState
                 : undefined
         );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
