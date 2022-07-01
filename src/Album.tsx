@@ -88,27 +88,30 @@ interface AlbumComponent {
 }
 
 function AlbumComponent(props: AlbumComponent) {
-    const fromLocalState =
-        typeof window !== "undefined" ? localStorage.getItem(props.rank) : null;
     const [likeOrDislike, setLikeOrDislike] = useState<
         "like" | "dislike" | "unknown" | undefined
-    >(
-        fromLocalState === "like" ||
-            fromLocalState === "dislike" ||
-            fromLocalState === "unknown"
-            ? fromLocalState
-            : undefined
-    );
+    >(undefined);
+
+    React.useEffect(() => {
+        const fromLocalState = localStorage.getItem(props.rank);
+        setLikeOrDislike(
+            fromLocalState === "like" ||
+                fromLocalState === "dislike" ||
+                fromLocalState === "unknown"
+                ? fromLocalState
+                : undefined
+        );
+    }, []);
 
     React.useEffect(() => {
         if (likeOrDislike === "like") {
-            localStorage.setItem(props.rank, likeOrDislike);
+            localStorage.setItem(props.rank, "like");
         } else if (likeOrDislike === "dislike") {
             localStorage.setItem(props.rank, "dislike");
         } else if (likeOrDislike === "unknown") {
             localStorage.setItem(props.rank, "unknown");
         }
-    }, [likeOrDislike]);
+    }, [likeOrDislike, props.rank]);
 
     return (
         <Album
@@ -125,6 +128,7 @@ function AlbumComponent(props: AlbumComponent) {
                 <Rank>{props.rank}</Rank>
                 <Link href={props.appleLink}>
                     <Image
+                        alt={`album cover for ${props.album} by ${props.artist}`}
                         src={
                             "https://2010s-top.derekr.net" +
                             "/albums/" +
