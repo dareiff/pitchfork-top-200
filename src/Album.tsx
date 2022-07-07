@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Router } from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -77,12 +78,16 @@ const TopWrapper = styled.div`
     justify-content: space-between;
 `;
 
-interface AlbumComponent {
+export interface AlbumI {
     rank: string;
     artist: string;
     album: string;
     appleLink: string;
+}
+interface AlbumComponent extends AlbumI {
     filter: string;
+    shareLinkActive: boolean;
+    shareLinkTrue: boolean;
 }
 
 function AlbumComponent(props: AlbumComponent) {
@@ -102,7 +107,17 @@ function AlbumComponent(props: AlbumComponent) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // override the local storage with the query param if set
     useEffect(() => {
+        props.shareLinkActive &&
+            setLikeOrDislike(props.shareLinkTrue ? "like" : "unknown");
+    }, [props.shareLinkTrue, props.shareLinkActive]);
+
+    useEffect(() => {
+        if (props.shareLinkActive === true) {
+            //bail out and do not set localStorage for anything
+            return;
+        }
         if (likeOrDislike === "like") {
             localStorage.setItem(props.rank, "like");
         } else if (likeOrDislike === "dislike") {
@@ -110,6 +125,7 @@ function AlbumComponent(props: AlbumComponent) {
         } else if (likeOrDislike === "unknown") {
             localStorage.setItem(props.rank, "unknown");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [likeOrDislike, props.rank]);
 
     return (
@@ -124,7 +140,7 @@ function AlbumComponent(props: AlbumComponent) {
             <TopWrapper>
                 <Rank>{props.rank}</Rank>
                 {props.appleLink.length !== 0 ? (
-                    <Link href={props.appleLink}>
+                    <Link href={props.appleLink} passHref>
                         <Image
                             alt={`album cover for ${props.album} by ${props.artist}`}
                             src={

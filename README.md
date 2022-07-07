@@ -8,4 +8,4 @@ Features to add:
         - and sets filter to "liked"
         - and parses all data in URL
 
-    Something to the effect of 2010s.derekr.net/liked=200,199,120,6,2,1
+    Something to the effect of 2010s.derekr.net/?liked=200,199,120,6,2,1
