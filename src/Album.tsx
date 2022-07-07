@@ -123,8 +123,25 @@ function AlbumComponent(props: AlbumComponent) {
         >
             <TopWrapper>
                 <Rank>{props.rank}</Rank>
-                <Link href={props.appleLink}>
+                {props.appleLink.length !== 0 ? (
+                    <Link href={props.appleLink}>
+                        <Image
+                            alt={`album cover for ${props.album} by ${props.artist}`}
+                            src={
+                                "https://2010s-top.derekr.net" +
+                                "/albums/" +
+                                props.rank +
+                                ".jpg"
+                            }
+                            height={200}
+                            width={200}
+                        />
+                    </Link>
+                ) : (
                     <Image
+                        onClick={() =>
+                            alert("This album is not available on Apple Music")
+                        }
                         alt={`album cover for ${props.album} by ${props.artist}`}
                         src={
                             "https://2010s-top.derekr.net" +
@@ -135,7 +152,7 @@ function AlbumComponent(props: AlbumComponent) {
                         height={200}
                         width={200}
                     />
-                </Link>
+                )}{" "}
             </TopWrapper>
             <Vote
                 iLike={likeOrDislike === "like"}
