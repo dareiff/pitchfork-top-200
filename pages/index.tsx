@@ -92,7 +92,6 @@ function App() {
     };
 
     const resetRecommendations = () => {
-        //push to "/"
         router.push("/");
         setCleared(true);
     };
