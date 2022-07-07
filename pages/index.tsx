@@ -52,10 +52,10 @@ const Filter = styled.div`
     justify-content: space-around;
 `;
 
+export type FilterProps = "like" | "dislike" | "unfiltered" | "unknown";
+
 function App() {
-    const [filter, setFilter] = useState<
-        "like" | "dislike" | "unfiltered" | "unknown"
-    >("unfiltered");
+    const [filter, setFilter] = useState<FilterProps>("unfiltered");
 
     let albumsToJSX = customData.map((album, x) => (
         <Album

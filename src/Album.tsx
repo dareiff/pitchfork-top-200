@@ -3,10 +3,11 @@ import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { FilterProps } from "../pages";
 
 interface AlbumStyleProps {
     semiHide?: boolean;
-    hideCompletely?: boolean;
+    show?: boolean;
 }
 
 const Album = styled.div<AlbumStyleProps>`
@@ -18,7 +19,7 @@ const Album = styled.div<AlbumStyleProps>`
     opacity: 1;
     opacity: ${(props) => (props.semiHide ? "0.2" : "1")};
 
-    display: ${(props) => (props.hideCompletely ? "none" : "block")};
+    display: ${(props) => (props.show ? "block" : "none")};
     @media (max-width: 500px) {
         width: 160px;
         margin: 5px;
@@ -27,6 +28,7 @@ const Album = styled.div<AlbumStyleProps>`
 
 interface VoteInterface {
     iLike: boolean | undefined;
+    iHate: boolean | undefined;
 }
 
 const Vote = styled.div<VoteInterface>`
@@ -34,6 +36,7 @@ const Vote = styled.div<VoteInterface>`
     flex-direction: row;
     justify-content: space-around;
     background: ${(props) => props.iLike && "#4af2a1"};
+    background: ${(props) => props.iHate && "#f24141"};
     padding: 4px 0;
     border-radius: 4px;
     margin: 5px 20px;
@@ -83,9 +86,9 @@ interface AlbumComponent {
 }
 
 function AlbumComponent(props: AlbumComponent) {
-    const [likeOrDislike, setLikeOrDislike] = useState<
-        "like" | "dislike" | "unknown" | undefined
-    >(undefined);
+    const [likeOrDislike, setLikeOrDislike] = useState<FilterProps | undefined>(
+        undefined
+    );
 
     useEffect(() => {
         const fromLocalState = localStorage.getItem(props.rank);
@@ -96,7 +99,7 @@ function AlbumComponent(props: AlbumComponent) {
                 ? fromLocalState
                 : undefined
         );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -112,10 +115,10 @@ function AlbumComponent(props: AlbumComponent) {
     return (
         <Album
             semiHide={likeOrDislike === "dislike"}
-            hideCompletely={
-                likeOrDislike !== props.filter &&
-                props.filter !== "unknown" &&
-                props.filter !== "unfiltered"
+            show={
+                likeOrDislike === props.filter ||
+                props.filter === "unfiltered" ||
+                (props.filter === "unknown" && likeOrDislike === undefined)
             }
         >
             <TopWrapper>
@@ -134,7 +137,10 @@ function AlbumComponent(props: AlbumComponent) {
                     />
                 </Link>
             </TopWrapper>
-            <Vote iLike={likeOrDislike === "like"}>
+            <Vote
+                iLike={likeOrDislike === "like"}
+                iHate={likeOrDislike === "dislike"}
+            >
                 <span onClick={() => setLikeOrDislike("dislike")}>
                     <span role="img" aria-label="Thumbs-down emoji">
                         👎
