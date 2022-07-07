@@ -1,27 +1,11 @@
-# React Example
+# Pitchfork’s top 200 from the 2010s
 
-This directory is a brief example of a [React](https://reactjs.org/) app with [Serverless Functions](https://zeit.co/docs/v2/serverless-functions/introduction) that can be deployed with ZEIT Now and zero configuration.
+Features to add:
 
-## Deploy Your Own
+1. Share your favorites:
+    - Create a share URL
+        - (that contains all data) 
+        - and sets filter to "liked"
+        - and parses all data in URL
 
-Deploy your own React project, along with Serverless Functions, with ZEIT Now.
-
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/new/project?template=https://github.com/zeit/now-examples/tree/master/create-react-app-functions)
-
-*Live Example: https://create-react-app-functions.now-examples.now.sh/*
-
-### How We Created This Example
-
-To get started with React, along with [Serverless Functions](https://zeit.co/docs/v2/serverless-functions/introduction), with ZEIT Now, you can use the [Create-React-App CLI](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) to initialize the project:
-
-```shell
-$ npx create-react-app my-app
-```
-
-### Deploying From Your Terminal
-
-You can deploy your new React project, along with [Serverless Functions](https://zeit.co/docs/v2/serverless-functions/introduction), with a single command from your terminal using [Now CLI](https://zeit.co/download):
-
-```shell
-$ now
-```
+    Something to the effect of 2010s.derekr.net/liked=200,199,120,6,2,1
