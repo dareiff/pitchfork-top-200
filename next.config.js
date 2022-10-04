@@ -1,6 +1,6 @@
 module.exports = {
     images: {
-        domains: ["2010s-top.derekr.net"],
+        domains: ["2010s-top.derekr.net", "https://2010s.online" ],
     },
     compiler: {
         styledComponents: {
