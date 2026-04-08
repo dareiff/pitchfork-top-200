@@ -1,11 +1,14 @@
 module.exports = {
     images: {
-        domains: ["2010s-top.derekr.net", "https://2010s.online" ],
-    },
-    compiler: {
-        styledComponents: {
-            displayName: true,
-            ssr: true,
-        },
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: '2010s-top.derekr.net',
+            },
+            {
+                protocol: 'https',
+                hostname: '2010s.online',
+            }
+        ],
     },
 };
